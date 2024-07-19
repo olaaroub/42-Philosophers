@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils-v1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/13 18:00:53 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/19 11:50:39 by olaaroub         ###   ########.fr       */
+/*   Created: 2024/07/19 11:42:22 by olaaroub          #+#    #+#             */
+/*   Updated: 2024/07/19 11:52:36 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/philo.h"
+#include "../inc/philo.h"
 
-int main(int ac, char **av)
+int	ft_isdigit(int c)
 {
-    if(ac == 6 || ac == 5)
-    {
-        check_args(av, ac);
-    }
-    return 0;        
+	return (c >= '0' && c <= '9');
+}
+
+void    exit_when_error(char* str)
+{
+    printf("%s", str);
+    exit(EXIT_FAILURE);
 }

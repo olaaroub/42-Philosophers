@@ -6,7 +6,7 @@
 #    By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 20:43:53 by olaaroub          #+#    #+#              #
-#    Updated: 2024/07/16 18:56:21 by olaaroub         ###   ########.fr        #
+#    Updated: 2024/07/19 12:04:24 by olaaroub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,11 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-#  CFLAGS += -fsanitize=address -g3
+  CFLAGS += -fsanitize=address -g3
 
-SRC = client.c 
+SRC = main.c utils/utils-v1.c check_args.c
 
 OBJ = $(SRC:.c=.o)
-
 
 NAME = philo
 
