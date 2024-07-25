@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 13:14:06 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/25 11:06:43 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:13:03 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/philo.h"
+#include "../inc/philo.h"
 
 
 static void    check_numbers(char *av)

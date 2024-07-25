@@ -6,7 +6,7 @@
 #    By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 20:43:53 by olaaroub          #+#    #+#              #
-#    Updated: 2024/07/25 11:16:27 by olaaroub         ###   ########.fr        #
+#    Updated: 2024/07/25 15:13:36 by olaaroub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
   CFLAGS += -fsanitize=address -g3
 
-SRC = main.c utils/utils-v1.c check_args.c
+SRC = src/main.c utils/utils-v1.c src/check_args.c src/initialization.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/25 11:03:51 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:12:16 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_philo
 
 struct s_program
 {
-    long    num_of_philos;
+    long        num_of_philos;
     long        time_to_eat;
     long        time_to_sleep;
     long        time_to_die;
@@ -63,5 +63,9 @@ int     ft_isdigit(int c);
 int     is_space(int c);
 long    ft_atol(char *str);
 void    exit_when_error(char* str);
-void check_args(t_program *data, char **av, int ac);
+void    check_args(t_program *data, char **av, int ac);
+void    init_data(t_program *data);
+
+
+
 #endif
