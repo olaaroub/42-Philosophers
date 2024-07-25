@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:11:03 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/25 15:15:19 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:50:21 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void    init_philo(t_program *data)
         philo->is_full = 0;
         philo->meals_eaten = 0;
         philo->program = data;
+        
         give_forks(philo, data->forks, i);
     }
 }
@@ -49,6 +50,9 @@ void    init_data(t_program *data)
     int i;
     
     i = -1;
+    data->end_of_program = false;
+    data->threads_state = false;
+    pthread_mutex_init(&data->get_mutex, NULL);
     data->philos = malloc(sizeof(t_philo) * data->num_of_philos);
     if(!data->philos)
         exit_when_error("Malloc error !\n");

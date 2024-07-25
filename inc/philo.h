@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/25 15:12:16 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:15:20 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,17 @@ typedef struct s_philo
 struct s_program
 {
     long        num_of_philos;
+    bool        threads_state;
     long        time_to_eat;
     long        time_to_sleep;
     long        time_to_die;
     long        num_of_meals;
-    long        start_of_program;
-    long        end_of_program;
-    int			dead_flag;
+    bool        start_of_program;
+    bool        end_of_program;
+    bool			dead_flag;
     t_fork      *forks;
+    t_mtx       get_mutex;
+    t_mtx       set_mutex;
 	t_philo		*philos;
 };
 
@@ -65,7 +68,11 @@ long    ft_atol(char *str);
 void    exit_when_error(char* str);
 void    check_args(t_program *data, char **av, int ac);
 void    init_data(t_program *data);
-
+long    read_long(t_mtx *read_mutex, long *value);
+bool    read_bool(t_mtx *read_mutex, bool *value);
+void    set_bool(t_mtx *set_mutex, bool *variable, bool new_val);
+void    set_long(t_mtx *set_mutex, long *variable, long new_val);
+void    prepare_simulation(t_program *data);
 
 
 #endif
