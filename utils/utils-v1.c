@@ -6,15 +6,41 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:42:22 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/19 15:14:17 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:06:39 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+long ft_atol(char *str)
+{
+    long	res;
+	int		    i;
+
+	res = 0;
+	i = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+		if (res > INT_MAX)
+			return (res);
+	}
+	return (res);
+}
+
 int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
+}
+
+int is_space(int c)
+{
+    return  (c == 32 || (c >= 9 && c <= 13));
 }
 
 void    exit_when_error(char* str)
