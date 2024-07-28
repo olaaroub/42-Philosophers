@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:42:22 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/25 11:06:39 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/28 12:17:49 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ long ft_atol(char *str)
 			return (res);
 	}
 	return (res);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	while ((*s1 && *s2) && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return s1 - s2;
+	
 }
 
 int	ft_isdigit(int c)

@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 13:14:06 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/25 15:13:03 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/28 22:31:01 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void check_args(t_program *data, char **av, int ac)
     arg = 1;
     while(arg < ac)
         check_numbers(av[arg++]);
-    data->num_of_philos = ft_atol(av[1]);
-    data->time_to_die = ft_atol(av[2]) * 1000;
-    data->time_to_eat = ft_atol(av[3]) * 1000;
-    data->time_to_sleep = ft_atol(av[4]) * 1000;
+    data->philo_nbr = ft_atol(av[1]);
+    data->time_to_die = ft_atol(av[2]);
+    data->time_to_eat = ft_atol(av[3]);
+    data->time_to_sleep = ft_atol(av[4]);
     if(ac > 5)
         data->num_of_meals = ft_atol(av[5]);
     else

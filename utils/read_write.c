@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/25 18:09:56 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/28 10:38:52 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,11 @@ void    set_bool(t_mtx *set_mutex, bool *variable, bool new_val)
     pthread_mutex_lock(set_mutex);
     *variable = new_val;
     pthread_mutex_unlock(set_mutex);
+}
+
+bool    end_of_dinner(t_program *data)
+{
+    bool status;
+    status = read_bool(&data->get_mutex, &data->end_of_program);
+    return status;
 }
