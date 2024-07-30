@@ -12,10 +12,10 @@
 
 #include "../inc/philo.h"
 
-long ft_atol(char *str)
+long	ft_atol(char *str)
 {
-    long	res;
-	int		    i;
+	long	res;
+	int		i;
 
 	res = 0;
 	i = 0;
@@ -40,8 +40,7 @@ int	ft_strcmp(char *s1, char *s2)
 		s1++;
 		s2++;
 	}
-	return s1 - s2;
-	
+	return (s1 - s2);
 }
 
 int	ft_isdigit(int c)
@@ -49,13 +48,13 @@ int	ft_isdigit(int c)
 	return (c >= '0' && c <= '9');
 }
 
-int is_space(int c)
+int	is_space(int c)
 {
-    return  (c == 32 || (c >= 9 && c <= 13));
+	return (c == 32 || (c >= 9 && c <= 13));
 }
 
-void    exit_when_error(char* str)
+void	exit_when_error(char *str)
 {
-    printf("%s", str);
-    exit(EXIT_FAILURE);
+	printf("%s", str);
+	exit(EXIT_FAILURE);
 }
