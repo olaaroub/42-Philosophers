@@ -6,50 +6,50 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/30 12:24:06 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:05:20 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "../../inc/philo.h"
 
-long	read_long(t_mtx *read_mutex, long *value)
+long	read_long(t_mtx *data_mutex, long *value)
 {
 	long	res;
 
-	pthread_mutex_lock(read_mutex);
+	pthread_mutex_lock(data_mutex);
 	res = *value;
-	pthread_mutex_unlock(read_mutex);
+	pthread_mutex_unlock(data_mutex);
 	return (res);
 }
 
-bool	read_bool(t_mtx *read_mutex, bool *value)
+bool	read_bool(t_mtx *data_mutex, bool *value)
 {
 	bool	res;
 
-	pthread_mutex_lock(read_mutex);
+	pthread_mutex_lock(data_mutex);
 	res = *value;
-	pthread_mutex_unlock(read_mutex);
+	pthread_mutex_unlock(data_mutex);
 	return (res);
 }
 
-void	set_long(t_mtx *set_mutex, long *variable, long new_val)
+void	set_long(t_mtx *data_mutex, long *variable, long new_val)
 {
-	pthread_mutex_lock(set_mutex);
+	pthread_mutex_lock(data_mutex);
 	*variable = new_val;
-	pthread_mutex_unlock(set_mutex);
+	pthread_mutex_unlock(data_mutex);
 }
 
-void	set_bool(t_mtx *set_mutex, bool *variable, bool new_val)
+void	set_bool(t_mtx *data_mutex, bool *variable, bool new_val)
 {
-	pthread_mutex_lock(set_mutex);
+	pthread_mutex_lock(data_mutex);
 	*variable = new_val;
-	pthread_mutex_unlock(set_mutex);
+	pthread_mutex_unlock(data_mutex);
 }
 
 bool	end_of_dinner(t_program *data)
 {
 	bool	status;
 
-	status = read_bool(&data->get_mutex, &data->end_of_program);
+	status = read_bool(&data->data_mutex, &data->end_of_program);
 	return (status);
 }

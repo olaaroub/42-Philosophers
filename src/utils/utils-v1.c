@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:42:22 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/28 12:17:49 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/30 21:43:29 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "../../inc/philo.h"
 
 long	ft_atol(char *str)
 {

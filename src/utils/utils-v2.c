@@ -6,19 +6,19 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/30 13:36:49 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:31:09 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "../../inc/philo.h"
 
 void	check_threads(t_program *data)
 {
-	while (!read_bool(&data->get_mutex, &data->threads_ready))
+	while (!read_bool(&data->data_mutex, &data->threads_ready))
 		;
 }
 
-size_t	get_current_time(void)
+long	get_current_time(void)
 {
 	struct timeval	tv;
 
@@ -27,9 +27,9 @@ size_t	get_current_time(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-int	ft_usleep(size_t time)
+int	ft_usleep(long time)
 {
-	size_t	start;
+	long	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < time)
@@ -41,8 +41,10 @@ void	print_status(t_philo *philo, int state)
 {
 	long	time_passed;
 
+	pthread_mutex_lock(&philo->program->data_mutex);
 	time_passed = get_current_time() - philo->program->start_dinner;
-	if (read_bool(&philo->program->get_mutex, &philo->is_full) == true)
+	pthread_mutex_unlock(&philo->program->data_mutex);
+	if (read_bool(&philo->program->data_mutex, &philo->is_full) == true)
 		return ;
 	pthread_mutex_lock(&philo->program->write_mutex);
 	if (state == F_FORK && !end_of_dinner(philo->program))
@@ -71,8 +73,8 @@ void	clean_exit(t_program *data)
 		philo = data->philos + i;
 		pthread_mutex_destroy(&philo->philo_mtx);
 	}
-	pthread_mutex_destroy(&data->get_mutex);
-	pthread_mutex_destroy(&data->set_mutex);
+	pthread_mutex_destroy(&data->data_mutex);
+	pthread_mutex_destroy(&data->data_mutex);
 	free(data->philos);
 	free(data->forks);
 }
