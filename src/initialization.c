@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:11:03 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/30 23:17:12 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:37:37 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	init_data(t_program *data)
 	i = -1;
 	data->end_of_program = false;
 	data->threads_ready = false;
+	data->all_full = 0;
 	pthread_mutex_init(&data->data_mutex, NULL);
 	pthread_mutex_init(&data->write_mutex, NULL);
 	data->philos = malloc(sizeof(t_philo) * data->philo_nbr);

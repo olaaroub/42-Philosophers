@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/30 23:39:47 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/08/01 21:34:43 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ static void	*handle_one_philo(void *param)
 	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
 	print_status(philo, F_FORK);
 	while (!end_of_dinner(philo->program))
-		ft_usleep(200);
+		ft_usleep(0);
 	return (NULL);
 }
 
 void	think_routine(t_philo *philo)
 {
 	print_status(philo, THINK);
+	usleep(500);
 }
 
 static void	eat_routine(t_philo *philo)
@@ -37,12 +38,15 @@ static void	eat_routine(t_philo *philo)
 	pthread_mutex_lock(philo->second_fork);
 	print_status(philo, S_FORK);
 	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
-	philo->meals_eaten++;
 	print_status(philo, EAT);
 	ft_usleep(philo->program->time_to_eat);
+	philo->meals_eaten++;
 	if (philo->program->num_of_meals > 0
 		&& philo->meals_eaten == philo->program->num_of_meals)
+	{
 		set_bool(&philo->philo_mtx, &philo->is_full, true);
+		increment(&philo->program->data_mutex, &philo->program->all_full);
+	}
 	pthread_mutex_unlock(philo->first_fork);
 	pthread_mutex_unlock(philo->second_fork);
 }
@@ -54,7 +58,7 @@ void	*start_simulation(void *params)
 	philo = (t_philo *)params;
 	check_threads(philo->program);
 	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
-	while (!end_of_dinner(philo->program))
+	while (!end_of_dinner(philo->program) && !all_philos_full(philo->program))
 	{
 		if (philo->is_full == true)
 			break ;

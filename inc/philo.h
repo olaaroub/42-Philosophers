@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/30 23:16:54 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:55:23 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ struct						s_program
 	pthread_t				admin_thread;
 	bool					threads_ready;
 	bool					end_of_program;
+	long					all_full;
 	long					philo_nbr;
 	long					start_dinner;
 	long					time_to_eat;
@@ -83,5 +84,7 @@ long						get_current_time(void);
 void						print_status(t_philo *philo, int id);
 void						*admin_routine(void *param);
 void						clean_exit(t_program *data);
+void						increment(t_mtx *data_mutex, long *variable);
+bool						all_philos_full(t_program *data);
 
 #endif

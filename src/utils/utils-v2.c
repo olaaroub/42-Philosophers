@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/30 23:31:09 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:52:44 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	print_status(t_philo *philo, int state)
 		return ;
 	pthread_mutex_lock(&philo->program->write_mutex);
 	if (state == F_FORK && !end_of_dinner(philo->program))
-		printf("%-6ld %d has taken first fork\n", time_passed, philo->id);
+		printf("%-6ld %d has taken a fork\n", time_passed, philo->id);
 	if (state == S_FORK && !end_of_dinner(philo->program))
-		printf("%-6ld %d has taken second fork\n", time_passed, philo->id);
+		printf("%-6ld %d has taken a fork\n", time_passed, philo->id);
 	if (state == EAT && !end_of_dinner(philo->program))
 		printf("%-6ld %d is eating\n", time_passed, philo->id);
 	if (state == SLEEP && !end_of_dinner(philo->program))
@@ -60,6 +60,15 @@ void	print_status(t_philo *philo, int state)
 	if (state == DIE)
 		printf("%-6ld %d died\n", time_passed, philo->id);
 	pthread_mutex_unlock(&philo->program->write_mutex);
+}
+bool	all_philos_full(t_program *data)
+{
+	long	nbr;
+
+	nbr = read_long(&data->data_mutex, &data->all_full);
+	if (nbr == data->philo_nbr)
+		return (1);
+	return (false);
 }
 
 void	clean_exit(t_program *data)
