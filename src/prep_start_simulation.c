@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/08/11 13:11:18 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/08/25 20:27:28 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	*handle_one_philo(void *param)
 void	think_routine(t_philo *philo)
 {
 	print_status(philo, THINK);
-	usleep(100);
+	usleep(30);
 }
 
 static void	eat_routine(t_philo *philo)
