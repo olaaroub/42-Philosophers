@@ -6,7 +6,7 @@
 #    By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 20:43:53 by olaaroub          #+#    #+#              #
-#    Updated: 2024/07/30 22:09:48 by olaaroub         ###   ########.fr        #
+#    Updated: 2024/10/06 10:49:53 by olaaroub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -fsanitize=thread -g3
+# CFLAGS += -fsanitize=thread -g3
 
 SRC = src/main.c src/utils/utils-v1.c src/check_args.c src/initialization.c
 SRC += src/prep_start_simulation.c src/utils/read_write.c src/utils/utils-v2.c
@@ -28,7 +28,7 @@ all:  $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ)  -o $(NAME)
-	
+
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(BONUS_OBJ)
@@ -38,7 +38,7 @@ clean:
 	@rm -rf $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
-	@rm -rf $(NAME) $(NAME_BONUS) 
+	@rm -rf $(NAME) $(NAME_BONUS)
 
 re: fclean all
 
