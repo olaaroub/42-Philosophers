@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/31 11:55:23 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:11:18 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <semaphore.h>
 
 # define F_FORK 1
 # define S_FORK 2
@@ -31,36 +32,35 @@
 typedef pthread_mutex_t		t_mtx;
 typedef struct s_program	t_program;
 
+typedef struct s_named_semaphores
+{
+	sem_t					*sem;
+	char					*name;
+}							t_named_semaphores;
+
 typedef struct s_philo
 {
-	pthread_t				thread_id;
+	pthread_t				thread;
+	t_named_semaphores		*local_sem;
+	bool					is_full;
 	int						id;
 	long					meals_eaten;
 	long					last_eating_time;
-	bool					is_full;
-	t_mtx					philo_mtx;
-	t_mtx					check_threads_mutex;
-	t_mtx					*first_fork;
-	t_mtx					*second_fork;
 	t_program				*program;
-
 }							t_philo;
+
 
 struct						s_program
 {
-	pthread_t				admin_thread;
-	bool					threads_ready;
-	bool					end_of_program;
-	long					all_full;
+	t_named_semaphores		*die_sem;
+	t_named_semaphores		*global_sem;
+	t_named_semaphores		*forks_sem;
 	long					philo_nbr;
 	long					start_dinner;
 	long					time_to_eat;
 	long					time_to_sleep;
 	long					time_to_die;
 	long					num_of_meals;
-	t_mtx					data_mutex;
-	t_mtx					write_mutex;
-	t_mtx					*forks;
 	t_philo					*philos;
 };
 
