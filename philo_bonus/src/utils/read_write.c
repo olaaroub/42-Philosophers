@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/08/11 13:09:06 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:15:10 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	end_of_dinner(t_program *data)
 {
 	bool	status;
 
-	status = read_bool(&data->data_mutex, &data->end_of_program);
+	status = read_bool(&data->global_sem, &data->end_of_program);
 	return (status);
 }
 

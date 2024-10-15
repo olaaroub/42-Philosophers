@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 17:09:28 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:15:43 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # define THINK 5
 # define DIE 6
 
-typedef pthread_mutex_t		t_mtx;
 typedef struct s_program	t_program;
 
 typedef struct s_named_semaphores
@@ -38,6 +37,16 @@ typedef struct s_named_semaphores
 	sem_t					*sem;
 	char					*name;
 }							t_named_semaphores;
+
+typedef struct s_wait
+{
+	sem_t				*stop;
+	sem_t				*died;
+	int					*pids;
+	long				pids_num;
+	bool				stop_flag;
+}						t_wait;
+
 
 typedef struct s_philo
 {
@@ -56,6 +65,8 @@ struct						s_program
 	t_named_semaphores		*die_sem;
 	t_named_semaphores		*global_sem;
 	t_named_semaphores		*forks_sem;
+	t_named_semaphores		*end_prog_sem;
+	bool					end_of_program;
 	int 					*pids;
 	long					philo_nbr;
 	long					start_dinner;

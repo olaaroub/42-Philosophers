@@ -6,26 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 17:12:54 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:07:30 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
-
-void	check_threads(t_program *data)
-{
-	while (!read_bool(&data->data_mutex, &data->threads_ready))
-		;
-}
-
-long	get_current_time(void)
-{
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL) != 0)
-		return(printf("gettimeofday() error \n"), -1);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
 
 int	ft_usleep(long time)
 {
@@ -61,29 +46,37 @@ void	print_status(t_philo *philo, int state)
 		printf("%-6ld %d died\n", time_passed, philo->id);
 	pthread_mutex_unlock(&philo->program->write_mutex);
 }
-bool	all_philos_full(t_program *data)
-{
-	long	nbr;
 
-	nbr = read_long(&data->data_mutex, &data->all_full);
-	if (nbr == data->philo_nbr)
-		return (1);
-	return (false);
+void	close_unlink(t_named_semaphores *sem, bool mode)
+{
+	if (!sem || !sem->sem || !sem->name)
+	{
+		if (sem)
+			free(sem);
+		return ;
+	}
+	sem_close(sem->sem);
+	if (mode)
+		sem_unlink(sem->name);
+	free(sem->name);
+	free(sem);
 }
 
-void	clean_exit(t_program *data)
+void	unlink_semaphores(t_program *data, bool mode)
 {
-	t_philo	*philo;
-	int		i;
+	close_unlink(data->die_sem, mode);
+	close_unlink(data->forks_sem, mode);
+	close_unlink(data->global_sem, mode);
+	close_unlink(data->end_prog_sem, mode);
+	close_unlink(data->philos.is_full, mode);
+	// close_unlink(data->philos.meal, mode);
+	close_unlink(data->philos.local_sem, mode);
+}
 
-	i = -1;
-	while (++i < data->philo_nbr)
-	{
-		philo = data->philos + i;
-		pthread_mutex_destroy(&philo->philo_mtx);
-	}
-	pthread_mutex_destroy(&data->data_mutex);
-	pthread_mutex_destroy(&data->data_mutex);
-	free(data->philos);
-	free(data->forks);
+void	clean_up(t_program *data, unsigned int exit_num, bool mode)
+{
+	unlink_semaphores(data, mode);
+	free(data->pids);
+	// free(data);
+	exit(exit_num);
 }

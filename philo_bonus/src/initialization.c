@@ -6,19 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:11:03 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 17:10:31 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:08:26 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-static void	init_philo(t_program *data)
-{
-	int		i;
-	t_philo	*philo;
-
-	i = -1;
-}
 
 int program_sem_init(t_program *data)
 {
@@ -31,6 +23,10 @@ int program_sem_init(t_program *data)
 	data->forks_sem = malloc(sizeof(t_named_semaphores));
 	if (!data->forks_sem)
 		return (free(data->die_sem), free(data->global_sem), -1);
+	data->end_prog_sem = malloc(sizeof(t_named_semaphores));
+	if (!data->end_prog_sem)
+		return (free(data->die_sem), free(data->global_sem),
+			free(data->forks_sem), -1);
 	data->pids = malloc(sizeof(int) * data->philo_nbr);
 	if (!data->pids)
 		return (free(data->die_sem), free(data->global_sem),
@@ -38,9 +34,11 @@ int program_sem_init(t_program *data)
 	data->die_sem->sem = NULL;
 	data->global_sem->sem = NULL;
 	data->forks_sem->sem = NULL;
+	data->end_prog_sem->sem = NULL;
 	data->die_sem->name = NULL;
 	data->global_sem->name = NULL;
 	data->forks_sem->name = NULL;
+	data->end_prog_sem->name = NULL;
 	return (0);
 }
 
@@ -78,10 +76,26 @@ void	init_data(t_program *data)
 	memset(data->philos, 0, sizeof(t_philo));
 	data->philos.program = data;
 	if(sem_forks(&data->forks_sem, "forks_sem", data->philo_nbr))
-		exit_when_error("sem_open faild\n");
+		return (printf("sem_open faild\n"), clean_up(data, 1, 1), NULL);
 	if(ft_sem_open(&data->die_sem, "die_sem"))
-		exit_when_error("sem_open faild\n");
+		return (printf("sem_open faild\n"), clean_up(data, 1, 1), NULL);
 	if(ft_sem_open(&data->global_sem, "global_sem"))
-		exit_when_error("sem_open faild\n");
+		return (printf("sem_open faild\n"), clean_up(data, 1, 1), NULL);
+	if(ft_sem_open(&data->end_prog_sem, "end_prog_sem"))
+		return (printf("sem_open faild\n"), clean_up(data, 1, 1), NULL);
 	init_philo(data);
+}
+
+int open_sems(t_philo *philo)
+{
+	philo->is_full = malloc(sizeof(t_named_semaphores));
+	// philo->e = malloc(sizeof(t_named_semaphores));
+	philo->local_sem = malloc(sizeof(t_named_semaphores));
+	if(ft_sem_open(&philo->is_full, "full"))
+		return (-1);
+	// if(ft_sem_open(&philo->meal, "meal"))
+	// 	return (-1);
+	if(ft_sem_open(&philo->local_sem, "value"))
+		return (-1);
+	return (0);
 }

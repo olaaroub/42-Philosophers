@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:42:22 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/08/01 21:38:56 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:06:02 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ int	is_space(int c)
 	return (c == 32 || (c >= 9 && c <= 13));
 }
 
-void	exit_when_error(char *str)
+long	get_current_time(void)
 {
-	printf("%s", str);
-	exit(EXIT_FAILURE);
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL) != 0)
+		return(printf("gettimeofday() error \n"), -1);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

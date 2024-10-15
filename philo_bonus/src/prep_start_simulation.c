@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 17:11:21 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:12:36 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,17 @@ static void	eat_routine(t_philo *philo)
 	pthread_mutex_unlock(philo->second_fork);
 }
 
-void	*start_simulation(void *params)
+void	*start_simulation(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)params;
-	// check_threads(philo->program);
+	if(open_sems(philo))
+		clean_up(philo->program, 1, 0);
 	while (get_current_time() < philo->program->start_dinner)
 		usleep(500);
+	pthread_create(&philo->thread, NULL, &admin_routine, philo);
 	if (philo->id % 2 == 0)
 		usleep(1000);
-	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
-	while (!end_of_dinner(philo->program) && !all_philos_full(philo->program))
+	set_long(&philo->local_sem, &philo->last_eating_time, get_current_time());
+	while (!end_of_dinner(philo->program))
 	{
 		if (philo->is_full == true)
 			break ;
@@ -79,6 +78,8 @@ void	*start_simulation(void *params)
 
 void	prepare_simulation(t_program *data)
 {
+	pthread_t thread;
+	t_wait wait;
 	int	i;
 
 	i = -1;
@@ -88,21 +89,21 @@ void	prepare_simulation(t_program *data)
 	// else
 	// {
 	data->start_dinner = get_current_time() + (data->philo_nbr * 25);
-		// set_long(&data->global_sem, &data->start_dinner, (get_current_time() + (data->philo_nbr * 25)));
-		// printf("===>%ld\n",data->start_dinner);
-		while (++i < data->philo_nbr)
-		{
-			data->philos.id = i + 1;
-			data->pids[i] = fork();
-			if (data->pids[i] == 0)
-				start_simulation(&data->philos);
-		}
-	// }
-	// pthread_create(&data->admin_thread, NULL, admin_routine, data);
-	// set_bool(&data->data_mutex, &data->threads_ready, true);
-	i = -1;
 	while (++i < data->philo_nbr)
-		pthread_join(data->philos[i].thread_id, NULL);
-	set_bool(&data->data_mutex, &data->end_of_program, true);
-	pthread_join(data->admin_thread, NULL);
+	{
+		data->philos.id = i + 1;
+		data->pids[i] = fork();
+		if (data->pids[i] == 0)
+			start_simulation(&data->philos);
+	}
+	wait.died = data->die_sem->sem;
+	wait.stop = data->end_prog_sem->sem;
+	wait.stop_flag = true;
+	wait.pids = data->pids;
+	wait.pids_num = data->philo_nbr;
+	pthread_create(&thread, NULL, &check_wait, &wait);
+	while(waitpid(-1, NULL, 0) != -1)
+		;
+	set_bool(&data->end_prog_sem->sem, &wait.stop_flag, 0);
+	pthread_join(thread, NULL);
 }
