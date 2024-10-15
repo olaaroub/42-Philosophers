@@ -6,24 +6,24 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 18:12:36 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 23:52:19 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-static void	*handle_one_philo(void *param)
-{
-	t_philo	*philo;
+// static void	*handle_one_philo(void *param)
+// {
+// 	t_philo	*philo;
 
-	philo = (t_philo *)param;
-	// check_threads(philo->program);
-	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
-	print_status(philo, F_FORK);
-	while (!end_of_dinner(philo->program))
-		ft_usleep(0);
-	return (NULL);
-}
+// 	philo = (t_philo *)param;
+// 	// check_threads(philo->program);
+// 	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
+// 	print_status(philo, F_FORK);
+// 	while (!end_of_dinner(philo->program))
+// 		ft_usleep(0);
+// 	return (NULL);
+// }
 
 void	think_routine(t_philo *philo)
 {
@@ -34,24 +34,27 @@ void	think_routine(t_philo *philo)
 	// 	usleep(30);
 }
 
+void	take_fork(t_philo *philo)
+{
+	sem_wait(philo->program->forks_sem->sem);
+	if(check_death(philo->program->die_sem->sem, philo->program->global_sem->sem) != 0)
+		print_status(philo, F_FORK);
+}
+
 static void	eat_routine(t_philo *philo)
 {
-	pthread_mutex_lock(philo->first_fork);
-	print_status(philo, F_FORK);
-	pthread_mutex_lock(philo->second_fork);
-	print_status(philo, S_FORK);
-	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
+
+	take_fork(philo);
+	take_fork(philo);
+	set_long(&philo->meal_sem, &philo->last_eating_time, get_current_time());
 	print_status(philo, EAT);
 	ft_usleep(philo->program->time_to_eat);
 	philo->meals_eaten++;
 	if (philo->program->num_of_meals > 0
 		&& philo->meals_eaten == philo->program->num_of_meals)
-	{
-		set_bool(&philo->philo_mtx, &philo->is_full, true);
-		increment(&philo->program->data_mutex, &philo->program->all_full);
-	}
-	pthread_mutex_unlock(philo->first_fork);
-	pthread_mutex_unlock(philo->second_fork);
+		set_bool(&philo->meal_sem, &philo->is_full, true);
+	sem_post(philo->program->forks_sem->sem);
+	sem_post(philo->program->forks_sem->sem);
 }
 
 void	*start_simulation(t_philo *philo)
@@ -64,7 +67,7 @@ void	*start_simulation(t_philo *philo)
 	if (philo->id % 2 == 0)
 		usleep(1000);
 	set_long(&philo->local_sem, &philo->last_eating_time, get_current_time());
-	while (!end_of_dinner(philo->program))
+	while (check_death(philo->program->die_sem->sem, philo->program->global_sem->sem) != 0)
 	{
 		if (philo->is_full == true)
 			break ;
@@ -72,6 +75,29 @@ void	*start_simulation(t_philo *philo)
 		print_status(philo, SLEEP);
 		ft_usleep(philo->program->time_to_sleep);
 		think_routine(philo);
+	}
+	return (NULL);
+}
+
+void	*check_wait(void *data)
+{
+	t_wait	*wait;
+	int		x;
+
+	x = 0;
+	wait = data;
+	while (read_bool(wait->stop, &wait->stop_flag))
+	{
+		if (wait->died->__align == 0 || wait->died->__align > 1)
+		{
+			usleep(2000);
+			while (x < wait->pids_num)
+			{
+				kill(wait->pids[x], SIGKILL);
+				x++;
+			}
+			break ;
+		}
 	}
 	return (NULL);
 }

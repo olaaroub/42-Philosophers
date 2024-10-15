@@ -6,57 +6,67 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 18:15:10 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 23:41:38 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
 
-long	read_long(t_mtx *data_mutex, long *value)
+long	read_long(sem_t	*sem, long *value)
 {
 	long	res;
 
-	pthread_mutex_lock(data_mutex);
+	sem_wait(sem);
 	res = *value;
-	pthread_mutex_unlock(data_mutex);
+	sem_post(sem);
 	return (res);
 }
 
-bool	read_bool(t_mtx *data_mutex, bool *value)
+bool	read_bool(sem_t	*sem, bool *value)
 {
 	bool	res;
 
-	pthread_mutex_lock(data_mutex);
+	sem_wait(sem);
 	res = *value;
-	pthread_mutex_unlock(data_mutex);
+	sem_post(sem);
 	return (res);
 }
 
-void	set_long(t_mtx *data_mutex, long *variable, long new_val)
+void	set_long(sem_t	*sem, long *variable, long new_val)
 {
-	pthread_mutex_lock(data_mutex);
+	sem_wait(sem);
 	*variable = new_val;
-	pthread_mutex_unlock(data_mutex);
+	sem_post(sem);
 }
 
-void	set_bool(t_mtx *data_mutex, bool *variable, bool new_val)
+void	set_bool(sem_t	*sem, bool *variable, bool new_val)
 {
-	pthread_mutex_lock(data_mutex);
+	sem_wait(sem);
 	*variable = new_val;
-	pthread_mutex_unlock(data_mutex);
+	sem_post(sem);
+}
+long check_death(sem_t *from, sem_t *lock)
+{
+	long	res;
+
+	res = 0;
+	sem_wait(lock);
+	res = from->__align;
+	sem_post(lock);
+	return (res);
 }
 
-bool	end_of_dinner(t_program *data)
+bool end_of_dinner(t_program *data)
 {
-	bool	status;
-
-	status = read_bool(&data->global_sem, &data->end_of_program);
-	return (status);
+	if(check_death(data->die_sem->sem, data->global_sem->sem) == 0)
+		return true;
+	else
+		return false;
 }
 
-void	increment(t_mtx *data_mutex, long *variable)
+void	increment(sem_t	*sem, long *variable)
 {
-	pthread_mutex_lock(data_mutex);
+	sem_wait(sem);
 	*variable = *variable + 1;
-	pthread_mutex_unlock(data_mutex);
+	sem_post(sem);
 }

@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 18:07:30 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 23:45:00 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	print_status(t_philo *philo, int state)
 {
 	long	time_passed;
 
-	pthread_mutex_lock(&philo->program->data_mutex);
+	sem_wait(philo->program->global_sem->sem);
 	time_passed = get_current_time() - philo->program->start_dinner;
-	pthread_mutex_unlock(&philo->program->data_mutex);
-	if (read_bool(&philo->program->data_mutex, &philo->is_full) == true)
+	sem_post(philo->program->global_sem->sem);
+	if (read_bool(&philo->local_sem, &philo->is_full) == true)
 		return ;
-	pthread_mutex_lock(&philo->program->write_mutex);
+	sem_wait(&philo->local_sem->sem);
 	if (state == F_FORK && !end_of_dinner(philo->program))
 		printf("%-6ld %d has taken a fork\n", time_passed, philo->id);
 	if (state == S_FORK && !end_of_dinner(philo->program))
@@ -44,7 +44,7 @@ void	print_status(t_philo *philo, int state)
 		printf("%-6ld %d is thinking\n", time_passed, philo->id);
 	if (state == DIE)
 		printf("%-6ld %d died\n", time_passed, philo->id);
-	pthread_mutex_unlock(&philo->program->write_mutex);
+	sem_post(&philo->local_sem->sem);
 }
 
 void	close_unlink(t_named_semaphores *sem, bool mode)
@@ -69,7 +69,7 @@ void	unlink_semaphores(t_program *data, bool mode)
 	close_unlink(data->global_sem, mode);
 	close_unlink(data->end_prog_sem, mode);
 	close_unlink(data->philos.is_full, mode);
-	// close_unlink(data->philos.meal, mode);
+	close_unlink(data->philos.meal_sem, mode);
 	close_unlink(data->philos.local_sem, mode);
 }
 

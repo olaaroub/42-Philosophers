@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 18:15:43 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 23:55:17 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <semaphore.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # define F_FORK 1
 # define S_FORK 2
@@ -52,6 +53,8 @@ typedef struct s_philo
 {
 	pthread_t				thread;
 	t_named_semaphores		*local_sem;
+	t_named_semaphores		*meal_sem;
+	t_named_semaphores		*value_sem;
 	bool					is_full;
 	int						id;
 	long					meals_eaten;
@@ -83,21 +86,18 @@ long						ft_atol(char *str);
 void						exit_when_error(char *str);
 void						check_args(t_program *data, char **av, int ac);
 void						init_data(t_program *data);
-long						read_long(t_mtx *read_mutex, long *value);
-bool						read_bool(t_mtx *read_mutex, bool *value);
-void						set_bool(t_mtx *data_mutex, bool *variable,
+long						read_long(sem_t *sem, long *value);
+bool						read_bool(sem_t *sem, bool *value);
+void						set_bool(sem_t *sem, bool *variable,
 								bool new_val);
-void						set_long(t_mtx *data_mutex, long *variable,
+void						set_long(sem_t *sem, long *variable,
 								long new_val);
 void						prepare_simulation(t_program *data);
-void						check_threads(t_program *data);
 bool						end_of_dinner(t_program *data);
 int							ft_usleep(long milliseconds);
 long						get_current_time(void);
 void						print_status(t_philo *philo, int id);
 void						*admin_routine(void *param);
 void						clean_exit(t_program *data);
-void						increment(t_mtx *data_mutex, long *variable);
-bool						all_philos_full(t_program *data);
 
 #endif
