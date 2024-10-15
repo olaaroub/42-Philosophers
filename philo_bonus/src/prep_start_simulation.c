@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/13 20:17:29 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:11:21 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,22 @@ void	prepare_simulation(t_program *data)
 	int	i;
 
 	i = -1;
-	if (data->num_of_meals == 0)
-		return ;
 	// else if (data->philo_nbr == 1)
 	// 	pthread_create(&data->philos[0].thread_id, NULL, handle_one_philo,
 	// 		&data->philos[0]);
-	else
-	{
-		set_long(&data->global_sem, &data->start_dinner, (get_current_time() + (data->philo_nbr * 25)));
+	// else
+	// {
+	data->start_dinner = get_current_time() + (data->philo_nbr * 25);
+		// set_long(&data->global_sem, &data->start_dinner, (get_current_time() + (data->philo_nbr * 25)));
 		// printf("===>%ld\n",data->start_dinner);
 		while (++i < data->philo_nbr)
-			pthread_create(&data->philos[i].thread_id, NULL, start_simulation,
-				&data->philos[i]);
-	}
+		{
+			data->philos.id = i + 1;
+			data->pids[i] = fork();
+			if (data->pids[i] == 0)
+				start_simulation(&data->philos);
+		}
+	// }
 	// pthread_create(&data->admin_thread, NULL, admin_routine, data);
 	// set_bool(&data->data_mutex, &data->threads_ready, true);
 	i = -1;

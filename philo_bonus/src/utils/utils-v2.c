@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/31 11:52:44 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:12:54 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ long	get_current_time(void)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) != 0)
-		printf("gettimeofday() error \n");
+		return(printf("gettimeofday() error \n"), -1);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 

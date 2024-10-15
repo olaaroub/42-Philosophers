@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/13 20:11:18 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:09:28 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <semaphore.h>
+# include <fcntl.h>
 
 # define F_FORK 1
 # define S_FORK 2
@@ -55,13 +56,14 @@ struct						s_program
 	t_named_semaphores		*die_sem;
 	t_named_semaphores		*global_sem;
 	t_named_semaphores		*forks_sem;
+	int 					*pids;
 	long					philo_nbr;
 	long					start_dinner;
 	long					time_to_eat;
 	long					time_to_sleep;
 	long					time_to_die;
 	long					num_of_meals;
-	t_philo					*philos;
+	t_philo					philos;
 };
 
 int							ft_isdigit(int c);
