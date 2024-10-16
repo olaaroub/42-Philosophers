@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 15:33:51 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:11:09 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ static void	eat_routine(t_philo *philo)
 
 	take_fork(philo);
 	take_fork(philo);
-	set_long(philo->meal_sem->sem, &philo->last_eating_time, get_current_time());
+	if(end_of_dinner(philo->program))
+		return ;
 	print_status(philo, EAT);
 	ft_usleep(philo->program->time_to_eat);
+	philo->last_eating_time = get_current_time();
 	philo->meals_eaten++;
 	if (philo->program->num_of_meals > 0
 		&& philo->meals_eaten == philo->program->num_of_meals)
@@ -66,11 +68,11 @@ static void	*start_simulation(t_philo *philo)
 	pthread_create(&philo->thread, NULL, &admin_routine, philo);
 	if (philo->id % 2 == 0)
 		usleep(1000);
-	set_long(philo->local_sem->sem, &philo->last_eating_time, get_current_time());
-	while (check_death(philo->program->die_sem->sem, philo->program->global_sem->sem) != 0)
+	philo->last_eating_time = get_current_time();
+	while (!end_of_dinner(philo->program))
 	{
 		if (philo->is_full == true)
-			break ;
+			break;
 		eat_routine(philo);
 		print_status(philo, SLEEP);
 		ft_usleep(philo->program->time_to_sleep);

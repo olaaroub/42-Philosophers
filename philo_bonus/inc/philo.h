@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 16:15:01 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:53:23 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,9 @@ void						*admin_routine(void *param);
 void	clean_up(t_program *data, unsigned int exit_num, bool mode);
 int open_sems(t_philo *philo);
 long check_death(sem_t *from, sem_t *lock);
+char	*ft_itoa(int n);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strdup(char *s1);
+int ft_strlen(char *str);
 
 #endif

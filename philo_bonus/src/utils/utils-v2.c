@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 15:59:51 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:03:50 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void	print_status(t_philo *philo, int state)
 {
 	long	time_passed;
 
+	// if(read_bool(philo->program->global_sem->sem, &philo->program->end_of_program) == true)
+	// 	return ;
 	sem_wait(philo->program->global_sem->sem);
 	time_passed = get_current_time() - philo->program->start_dinner;
 	sem_post(philo->program->global_sem->sem);
-	if (read_bool(philo->local_sem->sem, &philo->is_full) == true)
+	if (read_bool(philo->meal_sem->sem, &philo->is_full) == true)
 		return ;
 	sem_wait(philo->local_sem->sem);
 	if (state == F_FORK && !end_of_dinner(philo->program))

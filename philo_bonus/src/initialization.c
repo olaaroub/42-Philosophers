@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:11:03 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 17:26:14 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:46:47 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int sem_forks(t_named_semaphores **sem, char *namee, int philo_nbr)
 {
 	char *name;
 
-	name = strdup(namee);
+	name = ft_strjoin(namee, NULL);
 	(*sem)->name = name;
 	sem_unlink(name);
 	(*sem)->sem = sem_open(name, O_CREAT | O_EXCL, 0644, philo_nbr);
@@ -60,15 +60,17 @@ static int sem_forks(t_named_semaphores **sem, char *namee, int philo_nbr)
 	return (0);
 }
 
-static int ft_sem_open(t_named_semaphores **sem, char *namee)
+static int ft_sem_open(t_named_semaphores **sem, char *namee, int id)
 {
 	char *name;
+	char *id_str;
 
-	name = strdup(namee);
+	id_str = ft_itoa(id);
+	name = ft_strjoin(namee, id_str);
+	free(id_str);
 	(*sem)->name = name;
 	sem_unlink(name);
 	(*sem)->sem = sem_open(name, O_CREAT | O_EXCL, 0644, 1);
-	// free(name);
 	if ((*sem)->sem == SEM_FAILED)
 	{
 		printf("Failed to create semaphore %s\n", name);
@@ -89,19 +91,19 @@ int	init_data(t_program *data)
 		clean_up(data, 1, 1);
 		return (-1);
 	}
-	if(ft_sem_open(&data->die_sem, "die_sem"))
+	if(ft_sem_open(&data->die_sem, "die_sem", -1))
 	{
 		printf("sem_open faild\n");
 		clean_up(data, 1, 1);
 		return (-1);
 	}
-	if(ft_sem_open(&data->global_sem, "global_sem"))
+	if(ft_sem_open(&data->global_sem, "global_sem", -1))
 	{
 		printf("sem_open faild\n");
 		clean_up(data, 1, 1);
 		return (-1);
 	}
-	if(ft_sem_open(&data->end_prog_sem, "end_prog_sem"))
+	if(ft_sem_open(&data->end_prog_sem, "end_prog_sem", -1))
 	{
 		printf("sem_open faild\n");
 		clean_up(data, 1, 1);
@@ -115,11 +117,11 @@ int open_sems(t_philo *philo)
 	philo->local_sem = malloc(sizeof(t_named_semaphores));
 	philo->meal_sem = malloc(sizeof(t_named_semaphores));
 	philo->value_sem = malloc(sizeof(t_named_semaphores));
-	if(ft_sem_open(&philo->local_sem, "local"))
+	if(ft_sem_open(&philo->local_sem, "local", philo->id))
 		return (-1);
-	if(ft_sem_open(&philo->meal_sem, "meal"))
+	if(ft_sem_open(&philo->meal_sem, "meal", philo->id))
 		return (-1);
-	if(ft_sem_open(&philo->value_sem, "value"))
+	if(ft_sem_open(&philo->value_sem, "value", philo->id))
 		return (-1);
 	return (0);
 }

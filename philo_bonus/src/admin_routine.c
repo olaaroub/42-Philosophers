@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:39:33 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 16:18:41 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:12:05 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	*admin_routine(void *param)
 		{
 			set_bool(philo->program->global_sem->sem, &philo->program->end_of_program, true);
 			sem_wait(philo->program->die_sem->sem);
+			usleep(3000);
 			print_status(philo, DIE);
 		}
 	}
