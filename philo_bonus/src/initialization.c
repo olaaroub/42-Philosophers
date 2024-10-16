@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:11:03 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 12:39:46 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:26:14 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,48 +42,72 @@ static int program_sem_init(t_program *data)
 	return (0);
 }
 
-static int sem_forks(t_named_semaphores **sem, char *name, int philo_nbr)
+static int sem_forks(t_named_semaphores **sem, char *namee, int philo_nbr)
 {
+	char *name;
+
+	name = strdup(namee);
 	(*sem)->name = name;
 	sem_unlink(name);
-	(*sem) = sem_open(name, O_CREAT | O_EXCL, 0644, philo_nbr);
+	(*sem)->sem = sem_open(name, O_CREAT | O_EXCL, 0644, philo_nbr);
+	// free(name);
 	if ((*sem)->sem == SEM_FAILED)
 	{
 		printf("Failed to create semaphore\n");
-		(*sem)->sem = NULL;
+		// (*sem)->sem = NULL;
 		return (-1);
 	}
 	return (0);
 }
 
-static int ft_sem_open(t_named_semaphores **sem, char *name)
+static int ft_sem_open(t_named_semaphores **sem, char *namee)
 {
+	char *name;
+
+	name = strdup(namee);
 	(*sem)->name = name;
 	sem_unlink(name);
 	(*sem)->sem = sem_open(name, O_CREAT | O_EXCL, 0644, 1);
+	// free(name);
 	if ((*sem)->sem == SEM_FAILED)
 	{
-		printf("Failed to create semaphore\n");
+		printf("Failed to create semaphore %s\n", name);
 		return (-1);
 	}
 	return (0);
 }
 
-void	init_data(t_program *data)
+int	init_data(t_program *data)
 {
-	if(!program_sem_init(data))
+	if(program_sem_init(data))
 		exit_when_error("Error in sem_init !\n");
-	memset(data->philos, 0, sizeof(t_philo));
+	memset(&data->philos, 0, sizeof(t_philo));
 	data->philos.program = data;
 	if(sem_forks(&data->forks_sem, "forks_sem", data->philo_nbr))
-		return (printf("sem_open faild\n"), clean_up(data, 1, 1), NULL);
+	{
+		printf("sem_open faild\n");
+		clean_up(data, 1, 1);
+		return (-1);
+	}
 	if(ft_sem_open(&data->die_sem, "die_sem"))
-		return (printf("sem_open faild\n"), clean_up(data, 1, 1), NULL);
+	{
+		printf("sem_open faild\n");
+		clean_up(data, 1, 1);
+		return (-1);
+	}
 	if(ft_sem_open(&data->global_sem, "global_sem"))
-		return (printf("sem_open faild\n"), clean_up(data, 1, 1), NULL);
+	{
+		printf("sem_open faild\n");
+		clean_up(data, 1, 1);
+		return (-1);
+	}
 	if(ft_sem_open(&data->end_prog_sem, "end_prog_sem"))
-		return (printf("sem_open faild\n"), clean_up(data, 1, 1), NULL);
-	init_philo(data);
+	{
+		printf("sem_open faild\n");
+		clean_up(data, 1, 1);
+		return (-1);
+	}
+	return (0);
 }
 
 int open_sems(t_philo *philo)

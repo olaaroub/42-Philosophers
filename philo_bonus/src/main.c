@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:00:53 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 12:41:38 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:15:15 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int	main(int ac, char **av)
 		check_args(&data, av, ac);
 		if(data.num_of_meals == 0)
 			return (0);
-		init_data(&data);
+		if(init_data(&data) == -1)
+			exit_when_error("Failed to initialize data\n");
 		prepare_simulation(&data);
-		clean_up(&data, 0, 1);
+		// clean_up(&data, 0, 1);
 	}
 	else
 		exit_when_error("Invalid number of arguments !\n");

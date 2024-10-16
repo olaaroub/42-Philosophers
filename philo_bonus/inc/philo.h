@@ -6,23 +6,27 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 12:53:04 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:15:01 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <fcntl.h>
 # include <limits.h>
 # include <pthread.h>
+# include <semaphore.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
+# include <sys/stat.h>
 # include <sys/time.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
-# include <semaphore.h>
-# include <fcntl.h>
-# include <signal.h>
 
 # define F_FORK 1
 # define S_FORK 2
@@ -86,7 +90,7 @@ int							is_space(int c);
 long						ft_atol(char *str);
 void						exit_when_error(char *str);
 void						check_args(t_program *data, char **av, int ac);
-void						init_data(t_program *data);
+int						init_data(t_program *data);
 long						read_long(sem_t *sem, long *value);
 bool						read_bool(sem_t *sem, bool *value);
 void						set_bool(sem_t *sem, bool *variable,
