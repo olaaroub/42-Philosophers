@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:39:33 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 23:58:28 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:57:43 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,20 @@ static bool	check_dead_flag(t_philo *philo)
 
 void	*admin_routine(void *param)
 {
-	t_program	*data;
+	t_philo	*philo;
 	int			i;
 
-	data = (t_program *)param;
+	philo = (t_philo *)param;
 	// while(get_current_time() < data->start_dinner)
 	// 	usleep(500);
 	// ft_usleep(data->time_to_die - 10);
-	while (!end_of_dinner(data))
+	while (!end_of_dinner(philo->program) && !read_bool(&philo->local_sem, &philo->is_full))
 	{
-		while ((++i < data->philo_nbr && !end_of_dinner(data))
-			&& !all_philos_full(data))
+		if (check_dead_flag(philo) == true)
 		{
-			if (check_dead_flag(&data->philos) == true)
-			{
-				set_bool(&data->global_sem, &data->end_of_program, true);
-				print_status(&data->philos, DIE);
-			}
+			set_bool(&philo->program->global_sem->sem, &philo->program->end_of_program, true);
+			sem_wait(philo->program->die_sem->sem);
+			print_status(philo, DIE);
 		}
 	}
 	return (NULL);

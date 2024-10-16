@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 23:55:17 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:53:04 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_philo
 	t_named_semaphores		*local_sem;
 	t_named_semaphores		*meal_sem;
 	t_named_semaphores		*value_sem;
+	// long					start;
 	bool					is_full;
 	int						id;
 	long					meals_eaten;
@@ -98,6 +99,8 @@ int							ft_usleep(long milliseconds);
 long						get_current_time(void);
 void						print_status(t_philo *philo, int id);
 void						*admin_routine(void *param);
-void						clean_exit(t_program *data);
+void	clean_up(t_program *data, unsigned int exit_num, bool mode);
+int open_sems(t_philo *philo);
+long check_death(sem_t *from, sem_t *lock);
 
 #endif

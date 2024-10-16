@@ -6,13 +6,13 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:11:03 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 18:08:26 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:39:46 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int program_sem_init(t_program *data)
+static int program_sem_init(t_program *data)
 {
 	data->die_sem = malloc(sizeof(t_named_semaphores));
 	if (!data->die_sem)
@@ -42,7 +42,7 @@ int program_sem_init(t_program *data)
 	return (0);
 }
 
-int sem_forks(t_named_semaphores **sem, char *name, int philo_nbr)
+static int sem_forks(t_named_semaphores **sem, char *name, int philo_nbr)
 {
 	(*sem)->name = name;
 	sem_unlink(name);
@@ -56,7 +56,7 @@ int sem_forks(t_named_semaphores **sem, char *name, int philo_nbr)
 	return (0);
 }
 
-int ft_sem_open(t_named_semaphores **sem, char *name)
+static int ft_sem_open(t_named_semaphores **sem, char *name)
 {
 	(*sem)->name = name;
 	sem_unlink(name);
@@ -88,14 +88,14 @@ void	init_data(t_program *data)
 
 int open_sems(t_philo *philo)
 {
-	philo->is_full = malloc(sizeof(t_named_semaphores));
-	// philo->e = malloc(sizeof(t_named_semaphores));
 	philo->local_sem = malloc(sizeof(t_named_semaphores));
-	if(ft_sem_open(&philo->is_full, "full"))
+	philo->meal_sem = malloc(sizeof(t_named_semaphores));
+	philo->value_sem = malloc(sizeof(t_named_semaphores));
+	if(ft_sem_open(&philo->local_sem, "local"))
 		return (-1);
-	// if(ft_sem_open(&philo->meal, "meal"))
-	// 	return (-1);
-	if(ft_sem_open(&philo->local_sem, "value"))
+	if(ft_sem_open(&philo->meal_sem, "meal"))
+		return (-1);
+	if(ft_sem_open(&philo->value_sem, "value"))
 		return (-1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 23:52:19 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:53:00 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 	return (NULL);
 // }
 
-void	think_routine(t_philo *philo)
+static void	think_routine(t_philo *philo)
 {
 	print_status(philo, THINK);
 	if((philo->program->philo_nbr % 2 != 0))
@@ -34,7 +34,7 @@ void	think_routine(t_philo *philo)
 	// 	usleep(30);
 }
 
-void	take_fork(t_philo *philo)
+static void	take_fork(t_philo *philo)
 {
 	sem_wait(philo->program->forks_sem->sem);
 	if(check_death(philo->program->die_sem->sem, philo->program->global_sem->sem) != 0)
@@ -57,7 +57,7 @@ static void	eat_routine(t_philo *philo)
 	sem_post(philo->program->forks_sem->sem);
 }
 
-void	*start_simulation(t_philo *philo)
+static void	*start_simulation(t_philo *philo)
 {
 	if(open_sems(philo))
 		clean_up(philo->program, 1, 0);
@@ -76,10 +76,11 @@ void	*start_simulation(t_philo *philo)
 		ft_usleep(philo->program->time_to_sleep);
 		think_routine(philo);
 	}
-	return (NULL);
+	pthread_join(philo->thread, NULL);
+	clean_up(philo->program, 0, 0);
 }
 
-void	*check_wait(void *data)
+static void	*check_wait(void *data)
 {
 	t_wait	*wait;
 	int		x;

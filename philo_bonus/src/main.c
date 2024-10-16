@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:00:53 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 17:03:17 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:41:38 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av)
 			return (0);
 		init_data(&data);
 		prepare_simulation(&data);
-		clean_exit(&data);
+		clean_up(&data, 0, 1);
 	}
 	else
 		exit_when_error("Invalid number of arguments !\n");

@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 23:45:00 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:37:03 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	print_status(t_philo *philo, int state)
 
 	sem_wait(philo->program->global_sem->sem);
 	time_passed = get_current_time() - philo->program->start_dinner;
-	sem_post(philo->program->global_sem->sem);
+	sem_post(philo->program->global_sem->sem);void	unlink_semaphores(t_program *data, bool mode)
+
 	if (read_bool(&philo->local_sem, &philo->is_full) == true)
 		return ;
 	sem_wait(&philo->local_sem->sem);
@@ -47,7 +48,7 @@ void	print_status(t_philo *philo, int state)
 	sem_post(&philo->local_sem->sem);
 }
 
-void	close_unlink(t_named_semaphores *sem, bool mode)
+static void	close_unlink(t_named_semaphores *sem, bool mode)
 {
 	if (!sem || !sem->sem || !sem->name)
 	{
@@ -62,7 +63,7 @@ void	close_unlink(t_named_semaphores *sem, bool mode)
 	free(sem);
 }
 
-void	unlink_semaphores(t_program *data, bool mode)
+static void	unlink_semaphores(t_program *data, bool mode)
 {
 	close_unlink(data->die_sem, mode);
 	close_unlink(data->forks_sem, mode);

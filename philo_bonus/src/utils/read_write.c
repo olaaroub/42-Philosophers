@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/15 23:41:38 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:36:14 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,4 @@ bool end_of_dinner(t_program *data)
 		return true;
 	else
 		return false;
-}
-
-void	increment(sem_t	*sem, long *variable)
-{
-	sem_wait(sem);
-	*variable = *variable + 1;
-	sem_post(sem);
 }
