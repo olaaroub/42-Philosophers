@@ -1,0 +1,4 @@
+*.o
+*.tldr
+philo_bonus
+LazyPhilosophersTester
