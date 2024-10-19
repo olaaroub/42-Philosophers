@@ -6,7 +6,7 @@
 #    By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 20:43:53 by olaaroub          #+#    #+#              #
-#    Updated: 2024/10/17 16:28:19 by olaaroub         ###   ########.fr        #
+#    Updated: 2024/10/19 09:49:17 by olaaroub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC += src/admin_routine.c src/utils/ft_strjoin.c src/utils/ft_itoa.c src/utils/
 
 OBJ = $(SRC:.c=.o)
 
-NAME = philo_bonus
+NAME = philo
 
 all:  $(NAME)
 
