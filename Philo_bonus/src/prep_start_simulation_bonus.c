@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 17:00:52 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 18:18:29 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,34 @@
 // 	return (NULL);
 // }
 
-static void	think_routine(t_philo *philo)
-{
-	print_status(philo, THINK);
-	if((philo->program->philo_nbr % 2 != 0))
-		usleep(1000);
-	// else
-	// 	usleep(30);
-}
+// static void	think_routine(t_philo *philo)
+// {
+// 	print_status(philo, THINK);
+// 	if((philo->program->philo_nbr % 2 != 0))
+// 		usleep(1000);
+// }
 
-static void	take_fork(t_philo *philo)
-{
-	sem_wait(philo->program->forks_sem->sem);
-	if(check_death(philo->program->die_sem->sem, philo->program->global_sem->sem) != 0)
-		print_status(philo, F_FORK);
-}
+// static void	take_fork(t_philo *philo)
+// {
+// 	sem_wait(philo->program->forks_sem->sem);
+// 	// if(check_death(philo->program->die_sem->sem, philo->program->global_sem->sem) != 0)
+// 	print_status(philo, F_FORK);
+// }
 
 static void	eat_routine(t_philo *philo)
 {
-
-	take_fork(philo);
-	take_fork(philo);
-	if(end_of_dinner(philo->program))
-		return ;
+	sem_wait(philo->program->forks_sem->sem);
+	print_status(philo, F_FORK);
+	sem_wait(philo->program->forks_sem->sem);
+	print_status(philo, F_FORK);
+	// take_fork(philo);
+	// take_fork(philo);
+	// set_bool(philo->meal_sem->sem, &philo->is_eating, true);
+	set_long(philo->value_sem->sem, &philo->last_eating_time,  get_current_time());
 	print_status(philo, EAT);
 	ft_usleep(philo->program->time_to_eat);
 	sem_post(philo->program->forks_sem->sem);
 	sem_post(philo->program->forks_sem->sem);
-	set_long(philo->value_sem->sem, &philo->last_eating_time,  get_current_time());
 	philo->meals_eaten++;
 	if (philo->program->num_of_meals > 0
 		&& philo->meals_eaten == philo->program->num_of_meals)
@@ -66,17 +66,22 @@ static void	*start_simulation(t_philo *philo)
 	while (get_current_time() < philo->program->start_dinner)
 		usleep(500);
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(500);
 	pthread_create(&philo->thread, NULL, &admin_routine, philo);
 	philo->last_eating_time = get_current_time();
 	while (!end_of_dinner(philo->program))
 	{
+		// if(philo->program->die_sem->sem->__align == 0 || philo->program->die_sem->sem->__align > 1)
+		// 	break ;
 		if (philo->is_full == true)
-			break;
+			break ;
 		eat_routine(philo);
 		print_status(philo, SLEEP);
 		ft_usleep(philo->program->time_to_sleep);
-		think_routine(philo);
+		print_status(philo, THINK);
+		if((philo->program->philo_nbr % 2 != 0))
+			usleep(1000);
+		// think_routine(philo);
 	}
 	pthread_join(philo->thread, NULL);
 	clean_up(philo->program, 0, 0);
@@ -118,7 +123,7 @@ void	prepare_simulation(t_program *data)
 	// 		&data->philos[0]);
 	// else
 	// {
-	data->start_dinner = get_current_time() + (data->philo_nbr * 25);
+	data->start_dinner = get_current_time() + (data->philo_nbr * 15);
 	while (++i < data->philo_nbr)
 	{
 		data->philos.id = i + 1;

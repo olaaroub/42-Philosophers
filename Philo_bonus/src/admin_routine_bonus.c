@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:39:33 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 16:58:35 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:47:00 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ static bool	check_dead_flag(t_philo *philo)
 		return (1);
 	return (0);
 }
+// bool philo_eating(t_philo *philo)
+// {
+
+// }
 
 void	*admin_routine(void *param)
 {
@@ -40,8 +44,10 @@ void	*admin_routine(void *param)
 		ft_usleep(time_to_die - 10);
 	else
 		ft_usleep(time_to_die);
-	while (!end_of_dinner(philo->program) && !read_bool(philo->local_sem->sem, &philo->is_full))
+	while (!end_of_dinner(philo->program))
 	{
+		if(read_bool(philo->local_sem->sem, &philo->is_full) == true)
+			break ;
 		if (check_dead_flag(philo) == true)
 		{
 			set_bool(philo->program->global_sem->sem, &philo->program->end_of_program, true);

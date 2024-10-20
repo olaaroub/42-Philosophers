@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 18:53:23 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:45:32 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_philo
 	t_named_semaphores		*value_sem;
 	// long					start;
 	bool					is_full;
+	// bool					is_eating;
 	int						id;
 	long					meals_eaten;
 	long					last_eating_time;

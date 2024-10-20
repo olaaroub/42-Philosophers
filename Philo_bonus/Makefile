@@ -6,7 +6,7 @@
 #    By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 20:43:53 by olaaroub          #+#    #+#              #
-#    Updated: 2024/10/20 16:54:04 by olaaroub         ###   ########.fr        #
+#    Updated: 2024/10/20 17:34:36 by olaaroub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -fsanitize=thread -g3
+# CFLAGS += -fsanitize=thread -g3
 
 SRC = src/main_bonus.c src/utils/utils-v1_bonus.c src/check_args_bonus.c src/initialization_bonus.c
 SRC += src/prep_start_simulation_bonus.c src/utils/read_write_bonus.c src/utils/utils-v2_bonus.c
