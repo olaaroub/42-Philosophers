@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 21:03:18 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 18:53:15 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:42:22 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "../../inc/philo_bonus.h"
 
 char	*ft_strdup(char *s1)
 {

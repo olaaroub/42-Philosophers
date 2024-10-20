@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 03:24:49 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:42:47 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "../../inc/philo_bonus.h"
 
 int	ft_usleep(long time)
 {

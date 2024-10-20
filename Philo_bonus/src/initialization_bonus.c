@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:11:03 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 03:46:17 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:43:06 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "../inc/philo_bonus.h"
 
 static int program_sem_init(t_program *data)
 {
@@ -104,19 +104,21 @@ int	init_data(t_program *data)
 		return (-1);
 	}
 	if(ft_sem_open(&data->end_prog_sem, "end_prog_sem", -1))
-	{
-		printf("sem_open faild\n");
-		clean_up(data, 1, 1);
-		return (-1);
-	}
+		return(printf("sem_open faild\n"), clean_up(data, 1, 1), -1);
 	return (0);
 }
 
 int open_sems(t_philo *philo)
 {
 	philo->local_sem = malloc(sizeof(t_named_semaphores));
+	if(!philo->local_sem)
+		return (-1);
 	philo->meal_sem = malloc(sizeof(t_named_semaphores));
+	if(!philo->meal_sem)
+		return (-1);
 	philo->value_sem = malloc(sizeof(t_named_semaphores));
+	if(!philo->value_sem)
+		return (-1);
 	if(ft_sem_open(&philo->local_sem, "local", philo->id))
 		return (-1);
 	if(ft_sem_open(&philo->meal_sem, "meal", philo->id))

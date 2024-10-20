@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:24:52 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 18:52:46 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:42:27 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "../../inc/philo_bonus.h"
 
 int ft_strlen(char *str)
 {

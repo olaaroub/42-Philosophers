@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   admin_routine.c                                    :+:      :+:    :+:   */
+/*   admin_routine_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:39:33 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 03:48:11 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:58:35 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "../inc/philo_bonus.h"
 
 static bool	check_dead_flag(t_philo *philo)
 {
@@ -35,7 +35,11 @@ void	*admin_routine(void *param)
 	philo = (t_philo *)param;
 	// while(get_current_time() < data->->start_dinner)
 	// 	usleep(500);
-	ft_usleep(philo->program->time_to_die - 10);
+	long time_to_die = read_long(philo->local_sem->sem,  &philo->program->time_to_die);
+	if(time_to_die - 10 > 0)
+		ft_usleep(time_to_die - 10);
+	else
+		ft_usleep(time_to_die);
 	while (!end_of_dinner(philo->program) && !read_bool(philo->local_sem->sem, &philo->is_full))
 	{
 		if (check_dead_flag(philo) == true)

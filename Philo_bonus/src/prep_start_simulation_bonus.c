@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prep_start_simulation.c                            :+:      :+:    :+:   */
+/*   prep_start_simulation_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 03:52:53 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:00:52 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "../inc/philo_bonus.h"
 
 // static void	*handle_one_philo(void *param)
 // {
@@ -52,7 +52,7 @@ static void	eat_routine(t_philo *philo)
 	ft_usleep(philo->program->time_to_eat);
 	sem_post(philo->program->forks_sem->sem);
 	sem_post(philo->program->forks_sem->sem);
-	philo->last_eating_time = get_current_time();
+	set_long(philo->value_sem->sem, &philo->last_eating_time,  get_current_time());
 	philo->meals_eaten++;
 	if (philo->program->num_of_meals > 0
 		&& philo->meals_eaten == philo->program->num_of_meals)
@@ -65,9 +65,9 @@ static void	*start_simulation(t_philo *philo)
 		clean_up(philo->program, 1, 0);
 	while (get_current_time() < philo->program->start_dinner)
 		usleep(500);
-	pthread_create(&philo->thread, NULL, &admin_routine, philo);
 	if (philo->id % 2 == 0)
 		usleep(1000);
+	pthread_create(&philo->thread, NULL, &admin_routine, philo);
 	philo->last_eating_time = get_current_time();
 	while (!end_of_dinner(philo->program))
 	{

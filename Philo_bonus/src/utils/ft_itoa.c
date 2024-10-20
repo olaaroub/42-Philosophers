@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 21:34:59 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 18:40:08 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:42:10 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "../../inc/philo_bonus.h"
 
 static char	*ft_print_chars(char *ptr, int nbr, int count)
 {

@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 03:46:10 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:42:35 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/philo.h"
+#include "../../inc/philo_bonus.h"
 
 long	read_long(sem_t	*sem, long *value)
 {

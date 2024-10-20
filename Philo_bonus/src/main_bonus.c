@@ -6,11 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:00:53 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 16:15:15 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:43:10 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "../inc/philo_bonus.h"
 
 int	main(int ac, char **av)
 {

@@ -6,7 +6,7 @@
 #    By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 20:43:53 by olaaroub          #+#    #+#              #
-#    Updated: 2024/10/19 10:01:03 by olaaroub         ###   ########.fr        #
+#    Updated: 2024/10/20 16:54:04 by olaaroub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,15 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-# CFLAGS += -fsanitize=thread -g3
+CFLAGS += -fsanitize=thread -g3
 
-SRC = src/main.c src/utils/utils-v1.c src/check_args.c src/initialization.c
-SRC += src/prep_start_simulation.c src/utils/read_write.c src/utils/utils-v2.c
-SRC += src/admin_routine.c src/utils/ft_strjoin.c src/utils/ft_itoa.c src/utils/ft_strdup.c
+SRC = src/main_bonus.c src/utils/utils-v1_bonus.c src/check_args_bonus.c src/initialization_bonus.c
+SRC += src/prep_start_simulation_bonus.c src/utils/read_write_bonus.c src/utils/utils-v2_bonus.c
+SRC += src/admin_routine_bonus.c src/utils/ft_strjoin.c src/utils/ft_itoa.c src/utils/ft_strdup.c
 
 OBJ = $(SRC:.c=.o)
 
-NAME = philo
+NAME = philo_bonus
 
 all:  $(NAME)
 
