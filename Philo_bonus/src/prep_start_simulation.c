@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/17 16:26:45 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 03:52:53 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static void	eat_routine(t_philo *philo)
 		return ;
 	print_status(philo, EAT);
 	ft_usleep(philo->program->time_to_eat);
+	sem_post(philo->program->forks_sem->sem);
+	sem_post(philo->program->forks_sem->sem);
 	philo->last_eating_time = get_current_time();
 	philo->meals_eaten++;
 	if (philo->program->num_of_meals > 0
 		&& philo->meals_eaten == philo->program->num_of_meals)
 		set_bool(philo->meal_sem->sem, &philo->is_full, true);
-	sem_post(philo->program->forks_sem->sem);
-	sem_post(philo->program->forks_sem->sem);
 }
 
 static void	*start_simulation(t_philo *philo)

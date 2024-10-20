@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 12:36:14 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 03:46:10 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ long check_death(sem_t *from, sem_t *lock)
 
 bool end_of_dinner(t_program *data)
 {
-	if(check_death(data->die_sem->sem, data->global_sem->sem) == 0)
+	long	x;
+
+	x = check_death(data->die_sem->sem, data->global_sem->sem);
+	if (x == 0 || x > 1)
 		return true;
 	else
 		return false;

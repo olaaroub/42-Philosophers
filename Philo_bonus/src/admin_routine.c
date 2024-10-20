@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:39:33 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/16 19:12:05 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/20 03:48:11 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	*admin_routine(void *param)
 	t_philo	*philo;
 
 	philo = (t_philo *)param;
-	// while(get_current_time() < data->start_dinner)
+	// while(get_current_time() < data->->start_dinner)
 	// 	usleep(500);
 	ft_usleep(philo->program->time_to_die - 10);
 	while (!end_of_dinner(philo->program) && !read_bool(philo->local_sem->sem, &philo->is_full))
@@ -42,7 +42,7 @@ void	*admin_routine(void *param)
 		{
 			set_bool(philo->program->global_sem->sem, &philo->program->end_of_program, true);
 			sem_wait(philo->program->die_sem->sem);
-			usleep(3000);
+			usleep(1000);
 			print_status(philo, DIE);
 		}
 	}
