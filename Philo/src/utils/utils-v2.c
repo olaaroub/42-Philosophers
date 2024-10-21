@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/19 09:59:07 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:05:59 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	clean_exit(t_program *data)
 		pthread_mutex_destroy(&philo->philo_mtx);
 	}
 	pthread_mutex_destroy(&data->data_mutex);
-	pthread_mutex_destroy(&data->data_mutex);
+	pthread_mutex_destroy(&data->write_mutex);
 	free(data->philos);
 	free(data->forks);
 }

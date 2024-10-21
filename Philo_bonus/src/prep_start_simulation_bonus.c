@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 18:18:29 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:37:35 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 
 // 	philo = (t_philo *)param;
 // 	// check_threads(philo->program);
-// 	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
+// 	while (get_current_time() < philo->program->start_dinner)
+// 		usleep(500);
+// 	set_long(philo->value_sem->sem, &philo->last_eating_time, get_current_time());
 // 	print_status(philo, F_FORK);
 // 	while (!end_of_dinner(philo->program))
 // 		ft_usleep(0);
@@ -66,14 +68,14 @@ static void	*start_simulation(t_philo *philo)
 	while (get_current_time() < philo->program->start_dinner)
 		usleep(500);
 	if (philo->id % 2 == 0)
-		usleep(500);
+		usleep(1000);
 	pthread_create(&philo->thread, NULL, &admin_routine, philo);
 	philo->last_eating_time = get_current_time();
 	while (!end_of_dinner(philo->program))
 	{
 		// if(philo->program->die_sem->sem->__align == 0 || philo->program->die_sem->sem->__align > 1)
 		// 	break ;
-		if (philo->is_full == true)
+		if (read_bool(philo->meal_sem->sem, &philo->is_full) == true)
 			break ;
 		eat_routine(philo);
 		print_status(philo, SLEEP);
@@ -118,12 +120,9 @@ void	prepare_simulation(t_program *data)
 	int	i;
 
 	i = -1;
-	// else if (data->philo_nbr == 1)
-	// 	pthread_create(&data->philos[0].thread_id, NULL, handle_one_philo,
-	// 		&data->philos[0]);
-	// else
-	// {
-	data->start_dinner = get_current_time() + (data->philo_nbr * 15);
+	data->start_dinner = get_current_time() + (data->philo_nbr * 25);
+	// if(data->philo_nbr == 1)
+	// 	handle_one_philo(&data->philos);
 	while (++i < data->philo_nbr)
 	{
 		data->philos.id = i + 1;

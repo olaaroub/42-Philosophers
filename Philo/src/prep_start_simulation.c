@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 16:40:13 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:30:34 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static void	*handle_one_philo(void *param)
 	t_philo	*philo;
 
 	philo = (t_philo *)param;
-	check_threads(philo->program);
+	while (get_current_time() < philo->program->start_dinner)
+		usleep(500);
 	set_long(&philo->philo_mtx, &philo->last_eating_time, get_current_time());
 	print_status(philo, F_FORK);
 	while (!end_of_dinner(philo->program))
@@ -82,8 +83,11 @@ void	prepare_simulation(t_program *data)
 	if (data->num_of_meals == 0)
 		return ;
 	else if (data->philo_nbr == 1)
+	{
+		data->start_dinner = (get_current_time() + data->philo_nbr * 5);
 		pthread_create(&data->philos[0].thread_id, NULL, handle_one_philo,
 			&data->philos[0]);
+	}
 	else
 	{
 		data->start_dinner = (get_current_time() + data->philo_nbr * 10);
@@ -92,7 +96,6 @@ void	prepare_simulation(t_program *data)
 				&data->philos[i]);
 	}
 	pthread_create(&data->admin_thread, NULL, admin_routine, data);
-	set_bool(&data->data_mutex, &data->threads_ready, true);
 	i = -1;
 	while (++i < data->philo_nbr)
 		pthread_join(data->philos[i].thread_id, NULL);

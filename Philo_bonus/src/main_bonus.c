@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:00:53 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 16:43:10 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:39:05 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av)
 		if(init_data(&data) == -1)
 			exit_when_error("Failed to initialize data\n");
 		prepare_simulation(&data);
-		// clean_up(&data, 0, 1);
+		clean_up(&data, 0, 1);
 	}
 	else
 		exit_when_error("Invalid number of arguments !\n");
