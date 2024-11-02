@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:39:33 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/11/02 21:00:58 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 21:17:09 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*admin_routine(void *param)
 				usleep(1000);
 				print_status(data->philos + i, DIE);
 			}
-			usleep(5000);
+			usleep(500);
 		}
 	}
 	return (NULL);
