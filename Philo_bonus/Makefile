@@ -6,7 +6,7 @@
 #    By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 20:43:53 by olaaroub          #+#    #+#              #
-#    Updated: 2024/10/21 09:38:20 by olaaroub         ###   ########.fr        #
+#    Updated: 2024/11/02 20:46:55 by olaaroub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,9 @@ CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -fsanitize=thread -g3
 
 SRC = src/main_bonus.c src/utils/utils-v1_bonus.c src/check_args_bonus.c src/initialization_bonus.c
-SRC += src/prep_start_simulation_bonus.c src/utils/read_write_bonus.c src/utils/utils-v2_bonus.c
-SRC += src/admin_routine_bonus.c src/utils/ft_strjoin.c src/utils/ft_itoa.c src/utils/ft_strdup.c
+SRC += src/prep_start_simulation_bonus.c src/utils/read_write_bonus.c
+SRC += src/admin_routine_bonus.c src/utils/ft_strjoin.c src/utils/ft_itoa.c
+SRC += src/utils/utils-v3.c src/utils/ft_strdup.c src/utils/utils-v2_bonus.c
 
 OBJ = $(SRC:.c=.o)
 

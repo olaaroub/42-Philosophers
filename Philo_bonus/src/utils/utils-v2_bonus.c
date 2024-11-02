@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 18:08:08 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 19:00:39 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,5 @@ void	clean_up(t_program *data, unsigned int exit_num, bool mode)
 {
 	unlink_semaphores(data, mode);
 	free(data->pids);
-	// free(data);
 	exit(exit_num);
 }

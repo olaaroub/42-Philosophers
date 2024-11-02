@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils-v1.c                                         :+:      :+:    :+:   */
+/*   utils-v1_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:42:22 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 16:42:39 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:43:43 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,6 @@ long	get_current_time(void)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) != 0)
-		return(printf("gettimeofday() error \n"), -1);
+		return (printf("gettimeofday() error \n"), -1);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-void	exit_when_error(char *str)
-{
-	printf("%s", str);
-	exit(EXIT_FAILURE);
 }

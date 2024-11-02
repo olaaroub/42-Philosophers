@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/19 09:58:43 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:51:21 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,4 @@ bool	end_of_dinner(t_program *data)
 
 	status = read_bool(&data->data_mutex, &data->end_of_program);
 	return (status);
-}
-
-void	increment(t_mtx *data_mutex, long *variable)
-{
-	pthread_mutex_lock(data_mutex);
-	*variable = *variable + 1;
-	pthread_mutex_unlock(data_mutex);
 }

@@ -6,12 +6,12 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 17:45:32 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:48:09 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <fcntl.h>
 # include <limits.h>
@@ -45,13 +45,12 @@ typedef struct s_named_semaphores
 
 typedef struct s_wait
 {
-	sem_t				*stop;
-	sem_t				*died;
-	int					*pids;
-	long				pids_num;
-	bool				stop_flag;
-}						t_wait;
-
+	sem_t					*stop;
+	sem_t					*died;
+	int						*pids;
+	long					pids_num;
+	bool					stop_flag;
+}							t_wait;
 
 typedef struct s_philo
 {
@@ -68,7 +67,6 @@ typedef struct s_philo
 	t_program				*program;
 }							t_philo;
 
-
 struct						s_program
 {
 	t_named_semaphores		*die_sem;
@@ -76,7 +74,7 @@ struct						s_program
 	t_named_semaphores		*forks_sem;
 	t_named_semaphores		*end_prog_sem;
 	bool					end_of_program;
-	int 					*pids;
+	int						*pids;
 	long					philo_nbr;
 	long					start_dinner;
 	long					time_to_eat;
@@ -91,25 +89,26 @@ int							is_space(int c);
 long						ft_atol(char *str);
 void						exit_when_error(char *str);
 void						check_args(t_program *data, char **av, int ac);
-int						init_data(t_program *data);
+int							init_data(t_program *data);
 long						read_long(sem_t *sem, long *value);
 bool						read_bool(sem_t *sem, bool *value);
-void						set_bool(sem_t *sem, bool *variable,
-								bool new_val);
-void						set_long(sem_t *sem, long *variable,
-								long new_val);
+void						set_bool(sem_t *sem, bool *variable, bool new_val);
+void						set_long(sem_t *sem, long *variable, long new_val);
 void						prepare_simulation(t_program *data);
 bool						end_of_dinner(t_program *data);
 int							ft_usleep(long milliseconds);
 long						get_current_time(void);
 void						print_status(t_philo *philo, int id);
 void						*admin_routine(void *param);
-void	clean_up(t_program *data, unsigned int exit_num, bool mode);
-int open_sems(t_philo *philo);
-long check_death(sem_t *from, sem_t *lock);
-char	*ft_itoa(int n);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strdup(char *s1);
-int ft_strlen(char *str);
+void						clean_up(t_program *data, unsigned int exit_num,
+								bool mode);
+int							open_sems(t_philo *philo);
+long						check_death(sem_t *from, sem_t *lock);
+char						*ft_itoa(int n);
+char						*ft_strjoin(char *s1, char *s2);
+char						*ft_strdup(char *s1);
+int							ft_strlen(char *str);
+int							ft_sem_open(t_named_semaphores **sem, char *namee,
+								int id);
 
 #endif

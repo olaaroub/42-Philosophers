@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 18:01:34 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/31 11:55:23 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:53:42 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ struct						s_program
 	t_philo					*philos;
 };
 
-int							ft_isdigit(int c);
-int							is_space(int c);
 long						ft_atol(char *str);
 void						exit_when_error(char *str);
 void						check_args(t_program *data, char **av, int ac);

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_write.c                                       :+:      :+:    :+:   */
+/*   read_write_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:01:58 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 16:42:35 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:42:34 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo_bonus.h"
 
-long	read_long(sem_t	*sem, long *value)
+long	read_long(sem_t *sem, long *value)
 {
 	long	res;
 
@@ -22,7 +22,7 @@ long	read_long(sem_t	*sem, long *value)
 	return (res);
 }
 
-bool	read_bool(sem_t	*sem, bool *value)
+bool	read_bool(sem_t *sem, bool *value)
 {
 	bool	res;
 
@@ -32,20 +32,21 @@ bool	read_bool(sem_t	*sem, bool *value)
 	return (res);
 }
 
-void	set_long(sem_t	*sem, long *variable, long new_val)
+void	set_long(sem_t *sem, long *variable, long new_val)
 {
 	sem_wait(sem);
 	*variable = new_val;
 	sem_post(sem);
 }
 
-void	set_bool(sem_t	*sem, bool *variable, bool new_val)
+void	set_bool(sem_t *sem, bool *variable, bool new_val)
 {
 	sem_wait(sem);
 	*variable = new_val;
 	sem_post(sem);
 }
-long check_death(sem_t *from, sem_t *lock)
+
+long	check_death(sem_t *from, sem_t *lock)
 {
 	long	res;
 
@@ -54,15 +55,4 @@ long check_death(sem_t *from, sem_t *lock)
 	res = from->__align;
 	sem_post(lock);
 	return (res);
-}
-
-bool end_of_dinner(t_program *data)
-{
-	long	x;
-
-	x = check_death(data->die_sem->sem, data->global_sem->sem);
-	if (x == 0 || x > 1)
-		return true;
-	else
-		return false;
 }

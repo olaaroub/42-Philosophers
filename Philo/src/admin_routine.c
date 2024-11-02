@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 11:39:33 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/20 16:11:12 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 21:00:58 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	*admin_routine(void *param)
 	int			i;
 
 	data = (t_program *)param;
-	while(get_current_time() < data->start_dinner)
+	while (get_current_time() < data->start_dinner)
 		usleep(500);
-	if(data->time_to_die - 10 > 0)
+	if (data->time_to_die - 10 > 0)
 		ft_usleep(data->time_to_die - 10);
 	else
 		ft_usleep(data->time_to_die);
@@ -50,8 +50,10 @@ void	*admin_routine(void *param)
 				&& !all_philos_full(data))
 			{
 				set_bool(&data->data_mutex, &data->end_of_program, true);
+				usleep(1000);
 				print_status(data->philos + i, DIE);
 			}
+			usleep(5000);
 		}
 	}
 	return (NULL);

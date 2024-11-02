@@ -6,17 +6,11 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:10:55 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/21 09:05:59 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:54:24 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/philo.h"
-
-void	check_threads(t_program *data)
-{
-	while (!read_bool(&data->data_mutex, &data->threads_ready))
-		;
-}
 
 long	get_current_time(void)
 {
@@ -61,6 +55,7 @@ void	print_status(t_philo *philo, int state)
 		printf("%-6ld %d died\n", time_passed, philo->id);
 	pthread_mutex_unlock(&philo->program->write_mutex);
 }
+
 bool	all_philos_full(t_program *data)
 {
 	long	nbr;

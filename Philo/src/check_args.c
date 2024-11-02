@@ -6,11 +6,21 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 13:14:06 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/07/28 22:31:01 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:53:04 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+static int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+static int	is_space(int c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
 
 static void	check_numbers(char *av)
 {

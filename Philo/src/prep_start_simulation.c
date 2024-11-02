@@ -6,7 +6,7 @@
 /*   By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:21:28 by olaaroub          #+#    #+#             */
-/*   Updated: 2024/10/21 09:30:34 by olaaroub         ###   ########.fr       */
+/*   Updated: 2024/11/02 20:57:29 by olaaroub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	*handle_one_philo(void *param)
 void	think_routine(t_philo *philo)
 {
 	print_status(philo, THINK);
-	if((philo->program->philo_nbr % 2 != 0))
+	if ((philo->program->philo_nbr % 2 != 0))
 		usleep(1000);
 }
 
@@ -84,13 +84,13 @@ void	prepare_simulation(t_program *data)
 		return ;
 	else if (data->philo_nbr == 1)
 	{
-		data->start_dinner = (get_current_time() + data->philo_nbr * 5);
+		data->start_dinner = (get_current_time() + data->philo_nbr * 25);
 		pthread_create(&data->philos[0].thread_id, NULL, handle_one_philo,
 			&data->philos[0]);
 	}
 	else
 	{
-		data->start_dinner = (get_current_time() + data->philo_nbr * 10);
+		data->start_dinner = (get_current_time() + data->philo_nbr * 25);
 		while (++i < data->philo_nbr)
 			pthread_create(&data->philos[i].thread_id, NULL, start_simulation,
 				&data->philos[i]);
