@@ -6,7 +6,7 @@
 #    By: olaaroub <olaaroub@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/08 20:43:53 by olaaroub          #+#    #+#              #
-#    Updated: 2024/10/21 09:31:25 by olaaroub         ###   ########.fr        #
+#    Updated: 2024/11/02 21:37:02 by olaaroub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,18 +29,13 @@ all:  $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ)  -o $(NAME)
 
-bonus: $(NAME_BONUS)
-
-$(NAME_BONUS): $(BONUS_OBJ)
-	$(CC) $(CFLAGS) $(BONUS_OBJ) -o $(NAME_BONUS)
-
 clean:
-	@rm -rf $(OBJ) $(OBJ_BONUS)
+	@rm -rf $(OBJ)
 
 fclean: clean
-	@rm -rf $(NAME) $(NAME_BONUS)
+	@rm -rf $(NAME)
 
 re: fclean all
 
-.PHONY: clean fclean re all bonus
-.SECONDARY: $(OBJ) $(OBJ_BONUS)
+.PHONY: clean fclean re all
+.SECONDARY: $(OBJ)
